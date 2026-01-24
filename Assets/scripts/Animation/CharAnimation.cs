@@ -7,7 +7,6 @@ public class CharAnimation : MonoBehaviour
     void Start()
     {
         character = GetComponent<Character>();
-
     }
 
 
