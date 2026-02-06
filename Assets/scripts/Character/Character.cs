@@ -19,6 +19,10 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField]
     protected CharState state;
+    [SerializeField]
+    protected GameObject ringSelection;
+    public GameObject RingSelection { get { return ringSelection; } }
+
     public CharState State { get { return state; } }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -57,9 +61,8 @@ public abstract class Character : MonoBehaviour
             SetState(CharState.Idle);
         }
     }
-    // Update is called once per frame
-    void Update()
+    public void ToggleRingSelection(bool Flag)
     {
-
+        ringSelection.SetActive(Flag);
     }
 }
