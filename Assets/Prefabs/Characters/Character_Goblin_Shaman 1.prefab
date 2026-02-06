@@ -4468,7 +4468,7 @@ GameObject:
   - component: {fileID: 8610429334390894254}
   - component: {fileID: -3850444186566193611}
   - component: {fileID: -2876815031561329292}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character_Goblin_Shaman 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

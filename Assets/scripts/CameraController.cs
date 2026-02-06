@@ -38,17 +38,17 @@ public class CameraController : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
 
-        Vector3 dir = (transform.forward * zInput) + (transform.up * xInput);
+        Vector3 dir = (transform.forward * zInput) + (transform.right * xInput);
         transform.position += dir * moveSpeed * Time.fixedDeltaTime;
         transform.position = Clamp(corner1.position, corner2.position);
 
     }
     private Vector3 Clamp(Vector3 lowerLeft, Vector3 topRight)
     {
-        Vector3 pos = new Vector3(Mathf.Clamp(transform.position.x, lowerLeft.x, topRight.x), 
+        Vector3 pos = new Vector3(Mathf.Clamp(transform.position.x, lowerLeft.x, topRight.x),
             transform.position.y, Mathf.Clamp(transform.position.z, lowerLeft.z, topRight.z));
 
         return pos;
-            
+
     }
 }

@@ -4739,7 +4739,7 @@ GameObject:
   - component: {fileID: 2821009324361871575}
   - component: {fileID: -3468227350751196149}
   - component: {fileID: -4790589066350121908}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character_Skeleton_Soldier_02 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

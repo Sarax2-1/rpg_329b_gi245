@@ -12,7 +12,7 @@ public enum CharState
 
 public abstract class Character : MonoBehaviour
 {
-    protected NavMeshAgent NavAgent;
+    protected NavMeshAgent navAgent;
 
     protected Animator anim;
     public Animator Anim { get { return anim; } }
@@ -23,20 +23,43 @@ public abstract class Character : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        NavAgent = GetComponent<NavMeshAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
     }
     private void Start()
     {
-        
+
     }
     public void SetState(CharState s)
     {
         state = s;
+        if (state == CharState.Idle)
+        {
+            navAgent.isStopped = true;
+            navAgent.ResetPath();
+        }
+    }
+    public void WalkPosition(Vector3 dest)
+    {
+        if (navAgent != null)
+        {
+            navAgent.SetDestination(dest);
+            navAgent.isStopped = false;
+        }
+        SetState(CharState.Walk);
+    }
+    protected void WalkUpdate()
+    {
+        float distance = Vector3.Distance(transform.position, navAgent.destination);
+
+        if (distance <= navAgent.stoppingDistance)
+        {
+            SetState(CharState.Idle);
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
