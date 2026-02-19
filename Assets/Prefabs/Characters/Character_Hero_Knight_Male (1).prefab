@@ -2430,6 +2430,7 @@ GameObject:
   - component: {fileID: 1538076461562193666}
   - component: {fileID: 8358138254448990604}
   - component: {fileID: 6901181012971614876}
+  - component: {fileID: -8107261882129519250}
   m_Layer: 0
   m_Name: Character_Hero_Knight_Male (1)
   m_TagString: Untagged
@@ -2518,6 +2519,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hero
   state: 0
   ringSelection: {fileID: 8591267858595731426}
+  curHP: 10
+  curCharTarget: {fileID: 0}
+  attackRange: 2
+  attackDamage: 3
+  attackCoolDown: 2
+  attackTime: 0
+  findingRange: 20
 --- !u!136 &8358138254448990604
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2563,6 +2571,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-8107261882129519250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5438436895700522352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa04231802332344b6303c456b32230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackAI
+  curEnemy: {fileID: 0}
 --- !u!1 &5441974386772854846
 GameObject:
   m_ObjectHideFlags: 0

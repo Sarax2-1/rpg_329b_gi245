@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RightClick : MonoBehaviour
@@ -5,14 +6,7 @@ public class RightClick : MonoBehaviour
     Camera cam;
     public LayerMask layerMask;
 
-    LeftClick leftClick;
-
     public static RightClick instance;
-
-    void Awake()
-    {
-        leftClick = GetComponent<LeftClick>();
-    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,12 +25,14 @@ public class RightClick : MonoBehaviour
         }
     }
 
-    void CommandToWalk(RaycastHit hit, Character c)
+    void CommandToWalk(RaycastHit hit, List<Character> heroes)
     {
-        if (c != null)
+        foreach (Character h in heroes)
         {
-            c.WalkPosition(hit.point);
+            if (h != null)
+                h.WalkToPosition(hit.point);
         }
+        CreateVFX(hit.point, VFXManager.instance.DoubleRingMarker);
     }
     void TryCommand(Vector2 screenPos)
     {
@@ -47,9 +43,27 @@ public class RightClick : MonoBehaviour
             switch (hit.collider.tag)
             {
                 case "Ground":
-                    CommandToWalk(hit, leftClick.CurChar);
+                    CommandToWalk(hit, PartyManager.instance.SelectChars);
+                    break;
+                case "Enemy":
+                    CommandToAttack(hit, PartyManager.instance.SelectChars);
                     break;
             }
+        }
+    }
+    void CreateVFX(Vector3 pos, GameObject vfxPrefab)
+    {
+        if (vfxPrefab == null)
+            return;
+        Instantiate(vfxPrefab, pos + new Vector3(0f, 0.1f, 0f), Quaternion.identity);
+    }
+    void CommandToAttack(RaycastHit hit, List<Character> heroes)
+    {
+        Character target = hit.collider.GetComponent<Character>();
+        Debug.Log("Attack:" + target);
+        foreach (Character h in heroes)
+        {
+            h.ToAttackCharacter(target);
         }
     }
 }

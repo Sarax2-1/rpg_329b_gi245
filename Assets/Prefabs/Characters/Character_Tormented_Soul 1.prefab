@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 8910283350949370125}
   - component: {fileID: 4865564867359353673}
   - component: {fileID: -7176635737336999791}
+  - component: {fileID: -6231281350621091343}
   m_Layer: 6
   m_Name: Character_Tormented_Soul 1
   m_TagString: Untagged
@@ -168,6 +169,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero
   state: 0
+  ringSelection: {fileID: 0}
+  curHP: 10
+  curCharTarget: {fileID: 0}
+  attackRange: 2
+  attackDamage: 3
+  attackCoolDown: 2
+  attackTime: 0
+  findingRange: 20
 --- !u!114 &-7176635737336999791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +189,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d2a29aa756c594e87df5299b962364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharAnimation
+--- !u!114 &-6231281350621091343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa04231802332344b6303c456b32230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackAI
+  curEnemy: {fileID: 0}
 --- !u!1 &103080
 GameObject:
   m_ObjectHideFlags: 0
