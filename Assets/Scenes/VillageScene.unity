@@ -386,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1538076461562193666, guid: 1d0c1dfbcb6f5a140858ccc642388726, type: 3}
       propertyPath: isMagicMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5438436895700522352, guid: 1d0c1dfbcb6f5a140858ccc642388726, type: 3}
       propertyPath: m_Name
@@ -3897,7 +3897,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8156129915128887370, guid: f189ceaee61346344936eb8997a77b34, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 123232, guid: f189ceaee61346344936eb8997a77b34, type: 3}
       propertyPath: m_IsActive
@@ -4733,7 +4733,7 @@ PrefabInstance:
       objectReference: {fileID: 375310794}
     - target: {fileID: -31788273801107075, guid: 8f7176e4b1073234a87a989b4d5e6b52, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 160596, guid: 8f7176e4b1073234a87a989b4d5e6b52, type: 3}
       propertyPath: m_IsActive

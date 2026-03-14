@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+[System.Serializable]
 public class Magic
 {
     [SerializeField]

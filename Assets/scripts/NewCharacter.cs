@@ -3,7 +3,7 @@ using UnityEngine.AI;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum CharState
+public enum CharState1
 {
     Idle,
     Walk,
@@ -15,7 +15,7 @@ public enum CharState
     Die
 }
 
-public abstract class Character : MonoBehaviour
+public abstract class NewCharacter : MonoBehaviour
 {
     protected NavMeshAgent navAgent;
 
@@ -257,34 +257,7 @@ public abstract class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //private IEnumerator ShootMagicCast(Magic curMagicCast)
-    //{
-    //    if (vfxManager != null)
-    //        vfxManager.ShootMagic(curMagicCast.ShootID,
-    //            transform.position, curCharTarget.transform.position,
-    //            curMagicCast.ShootTime);
 
-    //    yield return new WaitForSeconds(curMagicCast.ShootTime);
-
-    //    MagicCastLogic(curMagicCast);
-    //    isMagicMode = false;
-
-    //    SetState(CharState.Idle);
-    //    if (uiManager != null)
-    //        uiManager.IsOnCurToggleMagic(false);
-    //}
-
-    //private IEnumerator LoadMagicCast(Magic curMagicCast)
-    //{
-    //    if (vfxManager != null)
-    //        vfxManager.LoadMagic(curMagicCast.LoadID,
-    //            transform.position,
-    //            curMagicCast.LoadTime);
-
-    //    yield return new WaitForSeconds(curMagicCast.LoadTime);
-
-    //    StartCoroutine(ShootMagicCast(curMagicCast));
-    //}
 
     private IEnumerator ShootMagicCast(Magic curMagicCast)
     {
