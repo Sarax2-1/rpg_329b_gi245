@@ -1,23 +1,28 @@
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RightClick : MonoBehaviour
 {
-    Camera cam;
-    public LayerMask layerMask;
-
     public static RightClick instance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Camera cam;
+    public LayerMask layerMask;
+
+    //private LeftClick leftClick;
+
+    private void Awake()
+    {
+        //leftClick = GetComponent<LeftClick>();
+    }
+
+    private void Start()
     {
         instance = this;
         cam = Camera.main;
-        layerMask = LayerMask.GetMask("Ground", "Character", "Building");
+        layerMask = LayerMask.GetMask("Ground", "Character", "Build");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonUp(1))
         {
@@ -25,45 +30,50 @@ public class RightClick : MonoBehaviour
         }
     }
 
-    void CommandToWalk(RaycastHit hit, List<Character> heroes)
+    private void CommandToWalk(RaycastHit hit, List<Character> heroes)
     {
         foreach (Character h in heroes)
         {
             if (h != null)
                 h.WalkToPosition(hit.point);
         }
+
         CreateVFX(hit.point, VFXManager.instance.DoubleRingMarker);
     }
-    void TryCommand(Vector2 screenPos)
+
+    private void CommandToAttack(RaycastHit hit, List<Character> heroes)
+    {
+        Character target = hit.collider.GetComponent<Character>();
+        Debug.Log("Attack" + target);
+
+        foreach (Character h in heroes)
+        {
+            h.ToAttackCharacter(target);
+        }
+    }
+
+    private void TryCommand(Vector2 screenPos)
     {
         Ray ray = cam.ScreenPointToRay(screenPos);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit, 1000, layerMask))
         {
             switch (hit.collider.tag)
             {
                 case "Ground":
-                    CommandToWalk(hit, PartyManager.instance.SelectChars);
-                    break;
+                    CommandToWalk(hit, PartyManager.instance.SelectChars); break;
                 case "Enemy":
-                    CommandToAttack(hit, PartyManager.instance.SelectChars);
-                    break;
+                    CommandToAttack(hit, PartyManager.instance.SelectChars); break;
             }
         }
     }
-    void CreateVFX(Vector3 pos, GameObject vfxPrefab)
+
+    private void CreateVFX(Vector3 pos, GameObject vfxPrefab)
     {
         if (vfxPrefab == null)
             return;
+
         Instantiate(vfxPrefab, pos + new Vector3(0f, 0.1f, 0f), Quaternion.identity);
-    }
-    void CommandToAttack(RaycastHit hit, List<Character> heroes)
-    {
-        Character target = hit.collider.GetComponent<Character>();
-        Debug.Log("Attack:" + target);
-        foreach (Character h in heroes)
-        {
-            h.ToAttackCharacter(target);
-        }
     }
 }
