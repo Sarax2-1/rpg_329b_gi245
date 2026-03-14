@@ -47,7 +47,6 @@ public class PartyManager : MonoBehaviour
             {
                 selectChars[0].IsMagicMode = true;
                 selectChars[0].CurMagicCast = selectChars[0].MagicSkills[0];
-                Debug.Log("Kuy Wave");
             }
         }
     }
