@@ -18,6 +18,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private int curToggleMagicTD = -1;
 
+    [SerializeField]
+    private GameObject blackImage;
+
+    [SerializeField]
+    private GameObject inventoryPanel;
+    [SerializeField]
+    private GameObject itemUIPrefab;
+
+    [SerializeField]
+    private GameObject[] slots;
+
     public static UIManager instance;
 
     private void Awake()
@@ -61,21 +72,22 @@ public class UIManager : MonoBehaviour
         Time.timeScale = isOn ? 0 : 1;
     }
 
-    //public void ShowMagicToggles()
-    //{
-    //    if (PartyManager.instance.SelectChars.Count <= 0)
-    //        return;
+    // public void ShowMagicToggles()
+    // {
+    //     if (PartyManager.instance.SelectChars.Count <= 0)
+    //         return;
 
-    //    //Show Magic skill only the single selected hero
-    //    Character hero = PartyManager.instance.SelectChars[0];
+    //     //Show Magic skill only the single selected hero
+    //     Character hero = PartyManager.instance.SelectChars[0];
 
-    //    for (int i = 0; i < hero.MagicSkills.Count; i++)
-    //    {
-    //        toggleMagic[i].interactable = true;
-    //        toggleMagic[i].isOn = false;
-    //        toggleMagic[i].GetComponent<Text>().text = hero.MagicSkills[i].Name;
-    //    }
-    //}
+    //     for (int i = 0; i < hero.MagicSkills.Count; i++)
+    //     {
+    //         toggleMagic[i].interactable = true;
+    //         toggleMagic[i].isOn = false;
+    //         toggleMagic[i].GetComponent<Text>().text = hero.MagicSkills[i].Name;
+    //         toggleMagic[i].targetGraphic.GetComponent<Image>().sprite = hero.MagicSkills[i].Icon;
+    //     }
+    // }
 
     public void ShowMagicToggles()
     {
@@ -94,6 +106,8 @@ public class UIManager : MonoBehaviour
                 Text txt = toggleMagic[i].GetComponentInChildren<Text>();
                 if (txt != null)
                     txt.text = hero.MagicSkills[i].Name;
+
+                toggleMagic[i].targetGraphic.GetComponent<Image>().sprite = hero.MagicSkills[i].Icon;
             }
             else
             {
@@ -112,5 +126,49 @@ public class UIManager : MonoBehaviour
     public void IsOnCurToggleMagic(bool flag)
     {
         toggleMagic[curToggleMagicTD].isOn = flag;
+    }
+    public void ToggleInventoryPanel()
+    {
+        if (!inventoryPanel.activeInHierarchy)
+        {
+            inventoryPanel.SetActive(true);
+            blackImage.SetActive(true);
+            ShowInventory();
+        }
+        else
+        {
+            inventoryPanel.SetActive(false);
+            blackImage.SetActive(false);
+            ClearInventory();
+        }
+    }
+    public void ClearInventory()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].transform.childCount > 0)
+            {
+                Transform child = slots[i].transform.GetChild(0);
+                Destroy(child.gameObject);
+            }
+        }
+    }
+    public void ShowInventory()
+    {
+        if (PartyManager.instance.SelectChars.Count <= 0)
+            return;
+
+        //Show Inventory only the single selected hero
+        Character hero = PartyManager.instance.SelectChars[0];
+
+        //Show items
+        for (int i = 0; i < hero.InventoryItems.Length; i++)
+        {
+            if (hero.InventoryItems[i] != null)
+            {
+                GameObject itemObj = Instantiate(itemUIPrefab, slots[i].transform);
+                itemObj.GetComponent<Image>().sprite = hero.InventoryItems[i].Icon;
+            }
+        }
     }
 }
