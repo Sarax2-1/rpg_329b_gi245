@@ -78,6 +78,10 @@ public class Quest
     private string answerNotFinish;
     public string AnswerNotFinish { get { return answerNotFinish; } }
 
+    [SerializeField]
+    private string questionFinished;
+    public string QuestionFinished { get { return questionFinished; } }
+
     public Quest(QuestData questData)
     {
         questId = questData.questId;
@@ -95,5 +99,6 @@ public class Quest
         questionInProgress = questData.questionInProgress;
         answerFinish = questData.answerFinish;
         answerNotFinish = questData.answerNotFinish;
+        questionFinished = questData.questionFinished;
     }
 }

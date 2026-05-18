@@ -18,4 +18,5 @@ public class QuestData : ScriptableObject
     public string questionInProgress;
     public string answerFinish;
     public string answerNotFinish;
+    public string questionFinished;
 }

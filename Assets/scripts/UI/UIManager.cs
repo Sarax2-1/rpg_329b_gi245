@@ -84,10 +84,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text btnNotFinishText;
 
-    private ItemDrag curItemDrag;
-
     [SerializeField]
-    private int curSlotId;
+    private GameObject btnExit;
 
     [SerializeField]
     private GameObject RewardPanel;
@@ -97,6 +95,14 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private TMP_Text ItemNameText;
+
+    [SerializeField]
+    private GameObject btnItemAccept;
+
+    private ItemDrag curItemDrag;
+
+    [SerializeField]
+    private int curSlotId;
 
     public static UIManager instance;
 
@@ -315,21 +321,17 @@ public class UIManager : MonoBehaviour
     private void SetupDialoguePanel(NPC npc)
     {
         index = 0;
-
         npcImage.sprite = npc.AvatarPic;
         npcNameText.text = npc.CharName;
 
         Quest inProgressQuest = QuestManager.instance.CheckForQuest(npc, QuestStatus.InProgress);
 
-        if (inProgressQuest != null) //There is an In-Progress Quest going on
+        if (inProgressQuest != null)
         {
-            Debug.Log($"In-progress: {inProgressQuest}");
             dialogueText.text = inProgressQuest.QuestionInProgress;
-
             bool hasItem = QuestManager.instance.CheckIfFinishQuest();
-            Debug.Log(hasItem);
 
-            if (hasItem) //has item to finish quest
+            if (hasItem)
             {
                 btnFinishText.text = inProgressQuest.AnswerFinish;
                 btnFinish.SetActive(true);
@@ -340,14 +342,21 @@ public class UIManager : MonoBehaviour
                 btnNotFinish.SetActive(true);
             }
         }
-        else //Check for new Quest
+        else
         {
             Quest newQuest = QuestManager.instance.CheckForQuest(npc, QuestStatus.New);
-            //Debug.Log(newQuest);
-
             if (newQuest != null)
             {
                 StartQuestDialogue(newQuest);
+            }
+            else
+            {
+                Quest finishedQuest = QuestManager.instance.CheckForQuest(npc, QuestStatus.Finish);
+                if (finishedQuest != null)
+                {
+                    dialogueText.text = finishedQuest.QuestionFinished;
+                    btnExit.SetActive(true);
+                }
             }
         }
     }
@@ -361,6 +370,15 @@ public class UIManager : MonoBehaviour
 
     public void PrepareDialogueBox(NPC npc)
     {
+        bool hasInProgress = QuestManager.instance.CheckForQuest(npc, QuestStatus.InProgress) != null;
+        bool hasNew = QuestManager.instance.CheckForQuest(npc, QuestStatus.New) != null;
+        bool hasFinished = QuestManager.instance.CheckForQuest(npc, QuestStatus.Finish) != null;
+
+        if (!hasInProgress && !hasNew && !hasFinished)
+        {
+            return;
+        }
+
         ClearDialogueBox();
         SetupDialoguePanel(npc);
         ToggleDialogueBox(true);
@@ -415,15 +433,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void AnswerNotFinish() //map with buttonNotFinish
+    public void AnswerNotFinish()
     {
         Debug.Log("Cannot Finish Quest");
         ToggleDialogueBox(false);
     }
 
-    public void ClosePanelButton() //map with ExitButton
+    public void ClosePanelButton()
     {
-        npcDialoguePanel.SetActive(false);
+        ToggleDialogueBox(false);
     }
 
     public void ItemRewardPanel(string itemName, Sprite icon)

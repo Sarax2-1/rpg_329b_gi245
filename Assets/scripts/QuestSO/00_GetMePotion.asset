@@ -32,3 +32,4 @@ MonoBehaviour:
   questionInProgress: 'Have you gotten any blue potion? '
   answerFinish: 'Here it is. '
   answerNotFinish: Not yet, please wait.
+  questionFinished: Thank
