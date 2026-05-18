@@ -56,15 +56,21 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     protected float attackRange = 2f;
     public float AttackRange { get { return attackRange; } }
+
     [SerializeField]
     protected int attackDamage = 3;
+    public int AttackDamage { get { return attackDamage; } }
+
     [SerializeField]
     protected float attackCooldown = 2f;
+
     [SerializeField]
     protected float attackTimer = 0f;
+
     [SerializeField]
     protected float findingRange = 20f;
     public float FindingRange { get { return findingRange; } }
+
     [SerializeField]
     protected List<Magic> magicSkills = new List<Magic>();
     public List<Magic> MagicSkills
@@ -102,6 +108,7 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField]
     protected int defensePower = 0;
+    public int DefensePower { get { return defensePower; } }
 
     [SerializeField]
     protected Transform weaponHand;
