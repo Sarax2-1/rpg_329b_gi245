@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class InventoryManager : MonoBehaviour
     public ItemData[] ItemData
     { get { return itemData; } set { itemData = value; } }
 
-    public const int MAXSLOT = 16;
+    public const int MAXSLOT = 18;
 
     public static InventoryManager instance;
 
@@ -45,6 +46,16 @@ public class InventoryManager : MonoBehaviour
         }
 
         PartyManager.instance.SelectChars[0].InventoryItems[index] = item;
+
+        switch (index)
+        {
+            case 16:
+                PartyManager.instance.SelectChars[0].EquipShield(item);
+                break;
+            case 17:
+                PartyManager.instance.SelectChars[0].EquipWeapon(item);
+                break;
+        }
     }
 
     public void RemoveItemInBag(int index)
@@ -53,6 +64,42 @@ public class InventoryManager : MonoBehaviour
             return;
 
         PartyManager.instance.SelectChars[0].InventoryItems[index] = null;
+
+        switch (index)
+        {
+            case 16:
+                PartyManager.instance.SelectChars[0].UnEquipShield();
+                break;
+            case 17:
+                PartyManager.instance.SelectChars[0].UnEquipWeapon();
+                break;
+        }
+    }
+
+    public bool RemoveItemFromParty(int id)
+    {
+        Item item = new Item(itemData[id]);
+        Debug.Log($"Finding {item.ItemName}");
+
+        List<Character> party = PartyManager.instance.Members;
+
+        foreach (Character hero in party)
+        {
+            for (int i = 0; i < hero.InventoryItems.Length; i++)
+            {
+                if (hero.InventoryItems[i] == null)
+                    continue;
+
+                if (hero.InventoryItems[i].ID == item.ID)
+                {
+                    Debug.Log($"Removing {hero.InventoryItems[i].ItemName}");
+                    hero.InventoryItems[i] = null;
+                    Debug.Log($"Removed {hero.InventoryItems[i]}");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     void SpawnDropItem(Item item, Vector3 pos)
@@ -94,4 +141,39 @@ public class InventoryManager : MonoBehaviour
                 SpawnDropItem(items[i], pos);
         }
     }
+
+    public void DrinkConsumableItem(Item item, int slotId)
+    {
+        string s = string.Format("Drink: {0}", item.ItemName);
+        Debug.Log(s);
+
+        if (PartyManager.instance.SelectChars.Count > 0)
+        {
+            PartyManager.instance.SelectChars[0].Recover(item.Power);
+            RemoveItemInBag(slotId);
+        }
+    }
+
+    public bool CheckPartyForItem(int id)
+    {
+        Item item = new Item(itemData[id]);
+        Debug.Log(item.ItemName);
+
+        List<Character> party = PartyManager.instance.Members;
+
+        foreach (Character hero in party)
+        {
+            for (int i = 0; i < hero.InventoryItems.Length; i++)
+            {
+                if (hero.InventoryItems[i] == null)
+                    continue;
+                Debug.Log(hero.InventoryItems[i].ItemName);
+
+                if (hero.InventoryItems[i].ID == item.ID)
+                    return true;
+            }
+        }
+        return false;
+    }
+
 }
